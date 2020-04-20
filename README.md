@@ -1,0 +1,1 @@
+# picgo-plugin-compression
