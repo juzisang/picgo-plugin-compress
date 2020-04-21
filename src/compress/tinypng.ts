@@ -1,7 +1,3 @@
-import { ICompress } from '../utils/interfaces'
-
-export class TinyPngCompress implements ICompress {
-  compressImg(file: string | Buffer): Promise<Buffer> {
-    return Promise.resolve(file as Buffer)
-  }
+export function tinypngCompress(file: Buffer): Promise<Buffer> {
+  throw new Error('not work')
 }
