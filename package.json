@@ -7,13 +7,15 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -p .",
-    "dev": "tsc -w -p ."
+    "dev": "tsc -w -p .",
+    "test": "picgo upload ./tests/demo.jpg"
   },
   "keywords": [
     "picgo",
     "picgo-plugin"
   ],
   "devDependencies": {
+    "@types/imagemin": "^7.0.0",
     "@types/node": "^12.12.36",
     "@typescript-eslint/parser": "^2.28.0",
     "eslint": "^6.8.0",
@@ -23,5 +25,7 @@
     "prettier": "^2.0.4",
     "typescript": "^3.8.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "imagemin": "^7.0.1"
+  }
 }
