@@ -57,7 +57,7 @@ module.exports = function (ctx: PicGo): any {
           name: 'compress',
           type: 'list',
           choice: Object.keys(CompressType),
-          default: CompressType.tinypng,
+          default: CompressType.imagemin,
           required: true,
         },
         {
