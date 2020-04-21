@@ -2,16 +2,16 @@ import PicGo from 'picgo'
 import { imageSize } from 'image-size'
 import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
-import { tinypngCompress } from 'compress/tinypng'
-import { imageminCompress } from 'compress/imagemin'
+import { tinypngCompress } from './compress/tinypng'
+import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './utils/enums'
 import { getImageBuffer } from './utils/urlUtil'
 import { reName } from './utils/nameUtil'
 
 async function handle(ctx: PicGo) {
-  const config = ctx.getConfig('transformer.sharp')
-  const compress = config.compress
-  const nameType = config.nameType
+  const config = ctx.getConfig('transformer.compress')
+  const compress = config?.compress
+  const nameType = config?.nameType
 
   const tasks = ctx.input.map((imageUrl) => {
     return getImageBuffer(ctx, imageUrl)
@@ -32,7 +32,7 @@ async function handle(ctx: PicGo) {
           buffer: buffer,
           width: width,
           height: height,
-          fileName: reName(nameType, path.basename(imageUrl)),
+          fileName: reName(nameType, imageUrl),
           extname: path.extname(imageUrl),
         }
       })
