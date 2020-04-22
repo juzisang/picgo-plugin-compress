@@ -5,9 +5,6 @@
   "repository": "git@github.com:JuZiSang/picgo-plugin-compress.git",
   "author": "juzisang <juziexe@gmail.com>",
   "license": "MIT",
-  "_moduleAliases": {
-    "@app": "dist"
-  },
   "scripts": {
     "build": "tsc -p .",
     "dev": "tsc -w -p .",

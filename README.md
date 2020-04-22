@@ -1,1 +1,5 @@
-# picgo-plugin-compression
+## picgo-plugin-compress
+
+```bash
+picgo add compress
+```
