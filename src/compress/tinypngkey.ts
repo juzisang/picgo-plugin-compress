@@ -22,6 +22,7 @@ export function tinypngKeyCompress({ ctx, info, key }: CompressOptions): Promise
 
 function uploadNetWorkImage({ ctx, info, key }: CompressOptions): Promise<Buffer> {
   const bearer = Base64.stringify(Utf8.parse(`api:${key}`))
+  ctx.log.info('TinyPng NetWork Url Upload')
   return ctx.Request.request({
     method: 'POST',
     url: TINYPNG_UPLOAD_URL,
@@ -38,14 +39,16 @@ function uploadNetWorkImage({ ctx, info, key }: CompressOptions): Promise<Buffer
     },
   }).then((data) => {
     if (data.output.url) {
+      ctx.log.info('TinyPng Upload Success:' + data.output.url)
       return getImageBuffer(ctx, data.output.url)
     }
-    throw new Error('tinyping upload error')
+    throw new Error('TinyPng Upload Error')
   })
 }
 
 function uploadLocalImage({ ctx, info, key }: CompressOptions): Promise<Buffer> {
   const bearer = Base64.stringify(Utf8.parse(`api:${key}`))
+  ctx.log.info('TinyPng Local File Upload')
   return getImageBuffer(ctx, info.url).then((buffer) => {
     const req = ctx.Request.request({
       method: 'POST',
@@ -59,9 +62,10 @@ function uploadLocalImage({ ctx, info, key }: CompressOptions): Promise<Buffer> 
     req.end(buffer)
     return req.then((data) => {
       if (data.output.url) {
+        ctx.log.info('TinyPng Upload Success:' + data.output.url)
         return getImageBuffer(ctx, data.output.url)
       }
-      throw new Error('tinyping upload error')
+      throw new Error('TinyPng Upload Error')
     })
   })
 }
