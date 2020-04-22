@@ -72,6 +72,11 @@
   resolved "https://registry.npm.taobao.org/@types/color-name/download/@types/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha1-HBJhu+qhCoBVu8XYq4S3sq/IRqA=
 
+"@types/crypto-js@^3.1.44":
+  version "3.1.44"
+  resolved "https://registry.npm.taobao.org/@types/crypto-js/download/@types/crypto-js-3.1.44.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcrypto-js%2Fdownload%2F%40types%2Fcrypto-js-3.1.44.tgz#3ad6f046b8c248866b9e5726ce8a1c09f73db9e0"
+  integrity sha1-OtbwRrjCSIZrnlcmzoocCfc9ueA=
+
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@types/eslint-visitor-keys/download/@types/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
@@ -139,7 +144,14 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.36.tgz?cache=0&sync_timestamp=1587400295926&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.36.tgz#162c8c2a2e659da480049df0e19ae128ad3a1527"
   integrity sha1-FiyMKi5lnaSABJ3w4ZrhKK06FSc=
 
-"@types/request@^2.48.4":
+"@types/request-promise-native@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.npm.taobao.org/@types/request-promise-native/download/@types/request-promise-native-1.0.17.tgz#74a2d7269aebf18b9bdf35f01459cf0a7bfc7fab"
+  integrity sha1-dKLXJprr8Yub3zXwFFnPCnv8f6s=
+  dependencies:
+    "@types/request" "*"
+
+"@types/request@*", "@types/request@^2.48.4":
   version "2.48.4"
   resolved "https://registry.npm.taobao.org/@types/request/download/@types/request-2.48.4.tgz#df3d43d7b9ed3550feaa1286c6eabf0738e6cf7e"
   integrity sha1-3z1D17ntNVD+qhKGxuq/Bzjmz34=
@@ -867,6 +879,11 @@ crypt@~0.0.1:
   version "0.0.2"
   resolved "https://registry.npm.taobao.org/crypt/download/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
   integrity sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=
+
+crypto-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/crypto-js/download/crypto-js-4.0.0.tgz?cache=0&sync_timestamp=1581509247325&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcrypto-js%2Fdownload%2Fcrypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha1-KQSrJnep0EKFai6i74DekuSjbcw=
 
 currently-unhandled@^0.4.1:
   version "0.4.1"

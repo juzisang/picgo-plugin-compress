@@ -7,7 +7,7 @@ export function isUrl(url: string) {
 }
 
 export async function fetch(ctx: PicGo, url: string): Promise<Buffer> {
-  return await ctx.Request.request({ method: 'Get', url, encoding: null }).on('response', (response: Response): void => {
+  return await ctx.Request.request({ method: 'GET', url, encoding: null }).on('response', (response: Response): void => {
     const contentType = response.headers['content-type']
     if (contentType && !contentType.includes('image')) {
       throw new Error(`${url} is not image`)

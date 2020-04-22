@@ -2,41 +2,48 @@ import PicGo from 'picgo'
 import { imageSize } from 'image-size'
 import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
+import { defaultCompress } from './compress/default'
 import { tinypngCompress } from './compress/tinypng'
+import { tinypngKeyCompress } from './compress/tinypngkey'
 import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './utils/enums'
-import { getImageBuffer } from './utils/urlUtil'
 import { reName } from './utils/nameUtil'
 
 async function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress')
   const compress = config?.compress
   const nameType = config?.nameType
+  const tinypngKey = config?.tinypngKey
 
-  const tasks = ctx.input.map((imageUrl) => {
-    return getImageBuffer(ctx, imageUrl)
-      .then((buffer) => {
-        switch (compress) {
-          case CompressType.tinypng:
-            return tinypngCompress(buffer)
-          case CompressType.imagemin:
-            return imageminCompress(buffer)
-          case CompressType.none:
-          default:
-            return buffer
-        }
-      })
-      .then((buffer) => {
-        const { width, height } = imageSize(buffer)
-        return {
-          buffer: buffer,
-          width: width,
-          height: height,
-          fileName: reName(nameType, imageUrl),
-          extname: path.extname(imageUrl),
-        }
-      })
-  })
+  const tasks = ctx.input
+    .map((imageUrl) => {
+      return {
+        url: imageUrl,
+        fileName: reName(nameType, imageUrl),
+        extname: path.extname(imageUrl),
+      }
+    })
+    .map((info) => {
+      const options = { ctx, info }
+      return Promise.resolve()
+        .then(() => {
+          switch (compress) {
+            case CompressType.tinypng:
+              return tinypngKey ? tinypngKeyCompress({ ...options, key: tinypngKey }) : tinypngCompress(options)
+            case CompressType.imagemin:
+              return imageminCompress(options)
+            case CompressType.none:
+            default:
+              return defaultCompress(options)
+          }
+        })
+        .then((info) => {
+          return {
+            ...info,
+            ...imageSize(info.buffer as Buffer),
+          }
+        })
+    })
 
   ctx.output = await Promise.all(tasks)
 
@@ -66,6 +73,11 @@ module.exports = function (ctx: PicGo): any {
           choice: Object.keys(NameType),
           default: NameType.timestamp,
           required: true,
+        },
+        {
+          name: 'tinypngKey',
+          type: 'input',
+          required: false,
         },
       ]
     },
