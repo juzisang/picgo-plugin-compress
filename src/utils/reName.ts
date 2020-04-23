@@ -1,4 +1,4 @@
-import { NameType } from './enums'
+import { NameType } from '../config'
 import * as path from 'path'
 
 export function reName(nameType: string, url: string): string {

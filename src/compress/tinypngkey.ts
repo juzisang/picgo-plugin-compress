@@ -1,5 +1,5 @@
 import { TINYPNG_UPLOAD_URL } from '../config'
-import { getImageBuffer, isUrl } from '../utils/urlUtil'
+import { getImageBuffer, isUrl } from '../utils/getImage'
 import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import Base64 from 'crypto-js/enc-base64'
 import Utf8 from 'crypto-js/enc-utf8'

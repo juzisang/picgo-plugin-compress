@@ -2,12 +2,12 @@ import PicGo from 'picgo'
 import { imageSize } from 'image-size'
 import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
-import { defaultCompress } from './compress/default'
+import { defaultCompress } from './compress/none'
 import { tinypngCompress } from './compress/tinypng'
 import { tinypngKeyCompress } from './compress/tinypngkey'
 import { imageminCompress } from './compress/imagemin'
-import { NameType, CompressType } from './utils/enums'
-import { reName } from './utils/nameUtil'
+import { NameType, CompressType } from './config'
+import { reName } from './utils/reName'
 
 async function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress')

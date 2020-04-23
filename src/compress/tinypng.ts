@@ -1,7 +1,7 @@
 import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import { TINYPNG_WEBUPLOAD_URL } from '../config'
 import { Response } from 'request'
-import { getImageBuffer } from '../utils/urlUtil'
+import { getImageBuffer } from '../utils/getImage'
 
 function getHeaders() {
   const v = 59 + Math.round(Math.random() * 10)
