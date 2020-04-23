@@ -61,20 +61,23 @@ module.exports = function (ctx: PicGo): any {
     config(ctx: PicGo): PluginConfig[] {
       return [
         {
+          alias: '压缩选项',
           name: 'compress',
           type: 'list',
-          choice: Object.keys(CompressType),
+          choices: Object.keys(CompressType),
           default: CompressType.imagemin,
           required: true,
         },
         {
+          alias: '重命名选项',
           name: 'nameType',
           type: 'list',
-          choice: Object.keys(NameType),
+          choices: Object.keys(NameType),
           default: NameType.none,
           required: true,
         },
         {
+          alias: 'TinypngKey',
           name: 'tinypngKey',
           type: 'input',
           required: false,
