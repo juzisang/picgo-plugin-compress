@@ -1,7 +1,11 @@
 {
   "name": "picgo-plugin-compress",
-  "version": "1.0.0",
+  "version": "1.0.3",
+  "description": "Image compression plugin for PicGo",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "git@github.com:JuZiSang/picgo-plugin-compress.git",
   "author": "juzisang <juziexe@gmail.com>",
   "license": "MIT",

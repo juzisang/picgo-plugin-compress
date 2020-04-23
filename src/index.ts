@@ -71,7 +71,7 @@ module.exports = function (ctx: PicGo): any {
           name: 'nameType',
           type: 'list',
           choice: Object.keys(NameType),
-          default: NameType.timestamp,
+          default: NameType.none,
           required: true,
         },
         {
