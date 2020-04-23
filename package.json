@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-compress",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Image compression plugin for PicGo",
   "main": "dist/index.js",
   "publishConfig": {
