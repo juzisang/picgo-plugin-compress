@@ -12,8 +12,7 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
-    "test": "picgo upload ./tests/demo.jpg",
-    "publish": "npm run build && npm publish"
+    "test": "picgo upload ./tests/demo.jpg"
   },
   "keywords": [
     "picgo",
