@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-compress",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Image compression plugin for PicGo",
   "main": "dist/index.js",
   "publishConfig": {
@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
-    "test": "picgo upload ./tests/demo.jpg"
+    "test": "picgo upload ./tests/demo.jpg",
+    "publish": "npm run build && npm publish"
   },
   "keywords": [
     "picgo",

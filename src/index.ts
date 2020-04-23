@@ -38,9 +38,14 @@ async function handle(ctx: PicGo) {
           }
         })
         .then((info) => {
+          const { width, height } = imageSize(info.buffer as Buffer)
+          const { buffer, extname, fileName } = info
           return {
-            ...info,
-            ...imageSize(info.buffer as Buffer),
+            buffer,
+            extname,
+            fileName,
+            width,
+            height,
           }
         })
     })
