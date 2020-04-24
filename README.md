@@ -1,5 +1,6 @@
 ## picgo-plugin-compress
 
+[![build](https://img.shields.io/github/workflow/status/juzisang/picgo-plugin-compress/NPMPublish/master?color=brightgreen)](https://github.com/JuZiSang/picgo-plugin-compress/actions)
 [![dm](https://img.shields.io/npm/dm/picgo-plugin-compress?color=brightgreen)](https://npmcharts.com/compare/picgo-plugin-compress?minimal=true)
 [![v](https://img.shields.io/npm/v/picgo-plugin-compress?color=brightgreen)](https://www.npmjs.com/package/picgo-plugin-compress)
 [![mit](https://img.shields.io/badge/license-mit-brightgreen.svg)](https://github.com/JuZiSang/picgo-plugin-compress/blob/master/LICENSE)

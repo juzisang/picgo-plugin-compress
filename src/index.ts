@@ -79,7 +79,7 @@ module.exports = function (ctx: PicGo): any {
           type: 'list',
           choices: Object.keys(NameType),
           default: NameType.none,
-          required: true,
+          required: false,
         },
         {
           alias: 'TinypngKey',
