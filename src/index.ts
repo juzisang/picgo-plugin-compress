@@ -9,7 +9,7 @@ import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 
-async function handle(ctx: PicGo) {
+function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress')
   const compress = config?.compress
   const nameType = config?.nameType
@@ -50,9 +50,10 @@ async function handle(ctx: PicGo) {
         })
     })
 
-  ctx.output = await Promise.all(tasks)
-
-  return ctx
+  return Promise.all(tasks).then((output) => {
+    ctx.output = output
+    return ctx
+  })
 }
 
 module.exports = function (ctx: PicGo): any {
