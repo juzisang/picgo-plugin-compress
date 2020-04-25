@@ -65,6 +65,10 @@ module.exports = function (ctx: PicGo): any {
       })
     },
     config(ctx: PicGo): PluginConfig[] {
+      let config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
+      if (!config) {
+        config = {}
+      }
       return [
         {
           alias: '压缩库',
@@ -72,7 +76,7 @@ module.exports = function (ctx: PicGo): any {
           type: 'list',
           message: '选择压缩库',
           choices: Object.keys(CompressType),
-          default: CompressType.imagemin,
+          default: config.compress || CompressType.imagemin,
           required: true,
         },
         {
@@ -81,7 +85,7 @@ module.exports = function (ctx: PicGo): any {
           type: 'list',
           message: '是否重命名成时间戳',
           choices: Object.keys(NameType),
-          default: NameType.none,
+          default: config.nameType || NameType.none,
           required: false,
         },
         {
@@ -89,6 +93,7 @@ module.exports = function (ctx: PicGo): any {
           name: 'tinypngKey',
           type: 'input',
           message: '申请key，每月可免费压缩500张图片，不填默认使用WebApi',
+          default: config.tinypngKey || null,
           required: false,
         },
       ]
