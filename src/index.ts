@@ -10,7 +10,7 @@ import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 
 function handle(ctx: PicGo) {
-  const config = ctx.getConfig('transformer.compress')
+  const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
   const compress = config?.compress
   const nameType = config?.nameType
   const tinypngKey = config?.tinypngKey
@@ -67,17 +67,19 @@ module.exports = function (ctx: PicGo): any {
     config(ctx: PicGo): PluginConfig[] {
       return [
         {
-          alias: '压缩选项',
+          alias: '压缩库',
           name: 'compress',
           type: 'list',
+          message: '选择压缩库',
           choices: Object.keys(CompressType),
           default: CompressType.imagemin,
           required: true,
         },
         {
-          alias: '重命名选项',
+          alias: '重命名',
           name: 'nameType',
           type: 'list',
+          message: '是否重命名成时间戳',
           choices: Object.keys(NameType),
           default: NameType.none,
           required: false,
@@ -86,6 +88,7 @@ module.exports = function (ctx: PicGo): any {
           alias: 'TinypngKey',
           name: 'tinypngKey',
           type: 'input',
+          message: '申请key，每月可免费压缩500张图片，不填默认使用WebApi',
           required: false,
         },
       ]
