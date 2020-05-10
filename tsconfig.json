@@ -6,10 +6,11 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "allowJs": true,
-    "declaration": true,
+    "declaration": false,
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "sourceMap": false,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "lib": [

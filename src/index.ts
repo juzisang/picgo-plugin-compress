@@ -3,8 +3,8 @@ import { imageSize } from 'image-size'
 import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
 import { defaultCompress } from './compress/none'
-import { tinypngCompress } from './compress/tinypng'
-import { tinypngKeyCompress } from './compress/tinypngkey'
+import { tinypngCompress } from './compress/tinypngweb'
+import { tinypngKeyCompress } from './compress/tinypng/index'
 import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
@@ -71,7 +71,6 @@ module.exports = function (ctx: PicGo): any {
       }
       return [
         {
-          alias: '压缩库',
           name: 'compress',
           type: 'list',
           message: '选择压缩库',
@@ -80,7 +79,6 @@ module.exports = function (ctx: PicGo): any {
           required: true,
         },
         {
-          alias: '重命名',
           name: 'nameType',
           type: 'list',
           message: '是否重命名成时间戳',
@@ -89,11 +87,10 @@ module.exports = function (ctx: PicGo): any {
           required: false,
         },
         {
-          alias: 'TinypngKey',
-          name: 'tinypngKey',
+          name: 'key',
           type: 'input',
-          message: '申请key，每月可免费压缩500张图片，不填默认使用WebApi',
-          default: config.tinypngKey || null,
+          message: '申请key，不填默认使用WebApi，逗号隔开，可使用多个Key叠加使用次数',
+          default: config.key || config.tinypngKey || null,
           required: false,
         },
       ]
