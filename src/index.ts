@@ -13,7 +13,7 @@ function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
   const compress = config?.compress
   const nameType = config?.nameType
-  const tinypngKey = config?.tinypngKey
+  const key = config.key || config.tinypngKey
 
   const tasks = ctx.input
     .map((imageUrl) => {
@@ -29,7 +29,7 @@ function handle(ctx: PicGo) {
         .then(() => {
           switch (compress) {
             case CompressType.tinypng:
-              return tinypngKey ? tinypngKeyCompress({ ...options, key: tinypngKey }) : tinypngCompress(options)
+              return key ? tinypngKeyCompress({ ...options, key }) : tinypngCompress(options)
             case CompressType.imagemin:
               return imageminCompress(options)
             case CompressType.none:
