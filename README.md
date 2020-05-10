@@ -28,9 +28,10 @@
   - timestamp 重命名成时间戳
   - none 不重名，默认选项
 
-  tinypngKey 可选
+  key 可选
 
   - 在 [developers](https://tinypng.com/developers) 中申请
+  - 逗号`,`隔开，可使用多个 Key 叠加使用次数
 
 ### [PicGo-Gui](https://github.com/Molunerfinn/PicGo) 在线安装
 
