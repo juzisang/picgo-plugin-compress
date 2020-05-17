@@ -8,6 +8,7 @@ import { tinypngKeyCompress } from './compress/tinypng/index'
 import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
+import { upngCompress } from './compress/upng'
 
 function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
@@ -32,6 +33,8 @@ function handle(ctx: PicGo) {
               return key ? tinypngKeyCompress({ ...options, key }) : tinypngCompress(options)
             case CompressType.imagemin:
               return imageminCompress(options)
+            case CompressType.upng:
+              return upngCompress(options)
             case CompressType.none:
             default:
               return defaultCompress(options)
@@ -79,18 +82,18 @@ module.exports = function (ctx: PicGo): any {
           required: true,
         },
         {
+          name: 'key',
+          type: 'input',
+          message: '申请key，不填默认使用WebApi，逗号隔开，可使用多个Key叠加使用次数',
+          default: config.key || config.tinypngKey || null,
+          required: false,
+        },
+        {
           name: 'nameType',
           type: 'list',
           message: '是否重命名成时间戳',
           choices: Object.keys(NameType),
           default: config.nameType || NameType.none,
-          required: false,
-        },
-        {
-          name: 'key',
-          type: 'input',
-          message: '申请key，不填默认使用WebApi，逗号隔开，可使用多个Key叠加使用次数',
-          default: config.key || config.tinypngKey || null,
           required: false,
         },
       ]

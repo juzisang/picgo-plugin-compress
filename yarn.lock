@@ -2160,6 +2160,14 @@ imagemin-optipng@^7.1.0:
     is-png "^2.0.0"
     optipng-bin "^6.0.0"
 
+imagemin-upng@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/imagemin-upng/-/imagemin-upng-2.0.2.tgz#69f45316222ac301d7ca7fab73a3d4d81ecae2a3"
+  integrity sha512-Ok/SULDNTkYy1hzWLncCCwVE1geDuaOZZKxreYmCuUrl9Khfeofpbs4kWmbVg5UPguejpOl1MdTlf6fJa1dl2Q==
+  dependencies:
+    is-png "2.0.0"
+    lib-upng "1.0.1"
+
 imagemin@^7.0.1:
   version "7.0.1"
   resolved "https://registry.npm.taobao.org/imagemin/download/imagemin-7.0.1.tgz?cache=0&sync_timestamp=1573808716935&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimagemin%2Fdownload%2Fimagemin-7.0.1.tgz#f6441ca647197632e23db7d971fffbd530c87dbf"
@@ -2408,7 +2416,7 @@ is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
-is-png@^2.0.0:
+is-png@2.0.0, is-png@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/is-png/download/is-png-2.0.0.tgz#ee8cbc9e9b050425cedeeb4a6fb74a649b0a4a8d"
   integrity sha1-7oy8npsFBCXO3utKb7dKZJsKSo0=
@@ -2600,6 +2608,13 @@ levn@^0.3.0, levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+lib-upng@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/lib-upng/-/lib-upng-1.0.1.tgz#cd7b4f5ded61c3445d0b4b384c38fc97c6b61f1d"
+  integrity sha512-tzwoDqYwUa4wscRSkH4k4lHWfGC/bV5A95LikzBMzfWn0JYJ/9SEdze3eiKannocqAv7U7j4j2yiCKwgvBxzsA==
+  dependencies:
+    pako "1.0.10"
 
 load-json-file@^1.0.0:
   version "1.1.0"
@@ -3141,6 +3156,11 @@ pac-resolver@^3.0.0:
     ip "^1.1.5"
     netmask "^1.0.6"
     thunkify "^2.1.2"
+
+pako@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
+  integrity sha512-0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==
 
 parent-module@^1.0.0:
   version "1.0.1"
