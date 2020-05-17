@@ -21,6 +21,7 @@
 
   - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，速度快，但是图片会有损耗，默认选项
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
+  - [upng](https://github.com/photopea/UPNG.js) upng 无损压缩
   - none 不压缩
 
   nameType 是否重命名
