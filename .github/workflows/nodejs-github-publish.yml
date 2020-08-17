@@ -5,8 +5,6 @@ name: GithubPublish
 
 on:
   push:
-    tags:
-      - '*'
     paths:
       - '.github/**'
 
