@@ -4,8 +4,7 @@
   "description": "Image compression plugin for PicGo",
   "main": "dist/index.js",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   },
   "repository": "git@github.com:JuZiSang/picgo-plugin-compress.git",
   "author": "juzisang <juziexe@gmail.com>",
