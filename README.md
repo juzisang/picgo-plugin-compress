@@ -29,9 +29,9 @@
   
   - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:
 
-    ![image-20200922212916280](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781356315)
+    ![image-20200922212916280](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781356315.jpeg)
 
-  ![image-20200922213104719](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781464747)
+  ![image-20200922213104719](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781464747.jpeg)
   
   nameType 是否重命名
   
