@@ -46,31 +46,33 @@ function  computeInSampleSize(srcWidth :number, srcHeight:number) {
 
   return getImageBuffer(ctx, info.url)
     .then((buffer)=>{
+      ctx.log.warn('原始文件大小:'+Math.round(buffer.length/1024)+"k")
       if(isJpg(buffer)){
         ctx.log.warn('本身就是jpg,不用转换:'+info.url)
         return buffer
       }
       ctx.log.warn('luban  格式转换为jpg:'+info.url)
-      return  images(buffer).encode("jpg", {operation:90})
+      return  images(buffer).encode("jpg")//, {operation:90}
     })
     .then((buffer)=>{
-
       var image2 = images(buffer)
       //todo 关键在于获取图片本身的宽高
       var samplesize = computeInSampleSize(image2.width(),image2.height())
       var conpressWidth = image2.width()/samplesize
-      ctx.log.warn('luban  width等比压缩:'+image2.width()+"-->"+conpressWidth)
-      return  image2.resize(conpressWidth).encode("jpg", {operation:90})
+      ctx.log.warn('转换成jpg后文件大小:'+Math.round(buffer.length/1024)+"k")
+      ctx.log.warn('准备用luban算法压缩:宽度变化:'+image2.width()+"-->"+conpressWidth)
+
+      return  image2.resize(conpressWidth).encode("jpg")//, {operation:90}
     })
     .then((buffer) => {
-      ctx.log.warn('luban  compress in progress')
+      ctx.log.warn('luban  压缩后,文件大小:'+Math.round(buffer.length/1024)+"k")
       //images(buffer).save("/Users/hss/github/picgo-plugin-compressluban/images/"+"xxxx.jpg")
       return imagemin.buffer(buffer, {
-        plugins: [mozjpeg({ quality: 70}),optipng({ optimizationLevel: 5 })],//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+        plugins: [mozjpeg({ quality: 75})],//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
       })
     })
     .then((buffer) => {
-      ctx.log.warn('luban  compress in success')
+      ctx.log.warn('最后mozjpeg  compress in success,最终文件大小:'+Math.round(buffer.length/1024)+"k")
       return {
         ...info,
         buffer,
