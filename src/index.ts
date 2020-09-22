@@ -9,9 +9,10 @@ import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 import { upngCompress } from './compress/upng'
+import { lubanCompress } from './compress/luban'
 
 function handle(ctx: PicGo) {
-  const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
+  const config = ctx.getConfig('transformer.compressluban') || ctx.getConfig('picgo-plugin-compressluban')
   const compress = config?.compress
   const nameType = config?.nameType
   const key = config.key || config.tinypngKey
@@ -26,6 +27,7 @@ function handle(ctx: PicGo) {
     })
     .map((info) => {
       const options = { ctx, info }
+      ctx.log.warn("compress type:"+compress)
       return Promise.resolve()
         .then(() => {
           switch (compress) {
@@ -33,11 +35,13 @@ function handle(ctx: PicGo) {
               return key ? tinypngKeyCompress({ ...options, key }) : tinypngCompress(options)
             case CompressType.imagemin:
               return imageminCompress(options)
+            case CompressType.luban:
+              return lubanCompress(options)
             case CompressType.upng:
               return upngCompress(options)
             case CompressType.none:
             default:
-              return defaultCompress(options)
+              return lubanCompress(options)
           }
         })
         .then((info) => {
@@ -61,24 +65,24 @@ function handle(ctx: PicGo) {
 
 module.exports = function (ctx: PicGo): any {
   return {
-    transformer: 'compress',
+    transformer: 'compressluban',
     register() {
-      ctx.helper.transformer.register('compress', {
+      ctx.helper.transformer.register('compressluban', {
         handle,
       })
     },
     config(ctx: PicGo): PluginConfig[] {
-      let config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
+      let config = ctx.getConfig('transformer.compressluban') || ctx.getConfig('picgo-plugin-compressluban')
       if (!config) {
         config = {}
       }
       return [
         {
-          name: 'compress',
+          name: 'compressluban',
           type: 'list',
           message: '选择压缩库',
           choices: Object.keys(CompressType),
-          default: config.compress || CompressType.imagemin,
+          default: config.compress || CompressType.luban,
           required: true,
         },
         {
