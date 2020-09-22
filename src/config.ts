@@ -10,7 +10,5 @@ export enum NameType {
 export enum CompressType {
   tinypng = 'tinypng',
   imagemin = 'imagemin',
-  upng = 'upng',
   luban = 'luban',
-  none = 'none',
 }

@@ -13,33 +13,24 @@
 
 - 安装 `picgo add compress`
 
-- 选择使用 compress `picgo use transformer`
+- 选择使用 `picgo use transformer`
 
 - 参数配置 `picgo config plugin compress`
 
   compress 选择压缩工具
+  默认选项
 
-  - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，速度快，但是图片会有损耗，默认选项
-  
+  - [imagemin](https://github.com/imagemin/imagemin) +luban 算法，最大程度节省流量，默认选项
+  - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，但是图片会有损耗
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
-  
-- [upng](https://github.com/photopea/UPNG.js) upng 无损压缩
-  
-- none 不压缩
-  
-  - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:
 
-    ![image-20200922212916280](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781356315.jpeg)
-
-  ![image-20200922213104719](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781464747.jpeg)
-  
   nameType 是否重命名
-  
+
   - timestamp 重命名成时间戳
   - none 不重名，默认选项
-  
+
   key 可选
-  
+
   - 在 [developers](https://tinypng.com/developers) 中申请
   - 逗号`,`隔开，可使用多个 Key 叠加使用次数
 
@@ -48,5 +39,10 @@
 - 打开详细窗口 > 插件设置 > 搜索 `compress` 即可安装，配置同上
 - 离线安装参考[这里](https://picgo.github.io/PicGo-Core-Doc/zh/dev-guide/deploy.html#gui%E6%8F%92%E4%BB%B6)
 
+## 压缩效果对比
 
-
+| 类型   | tinypng                  | luban                  | imagemin                  |
+| ------ | ------------------------ | ---------------------- | ------------------------- |
+| 原大小 | 1.5MB                    | 1.5M                   | 1.5M                      |
+| 压缩后 | 315 KB                   | 276 KB                 | 411 KB                    |
+| 效果图 | ![](./tests/tinypng.png) | ![](./tests/luban.png) | ![](./tests/imagemin.png) |

@@ -2,13 +2,11 @@ import PicGo from 'picgo'
 import { imageSize } from 'image-size'
 import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
-import { defaultCompress } from './compress/none'
 import { tinypngCompress } from './compress/tinypngweb'
 import { tinypngKeyCompress } from './compress/tinypng/index'
 import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
-import { upngCompress } from './compress/upng'
 import { lubanCompress } from './compress/luban'
 
 //npm install /Users/hss/github/picgo-plugin-compress
@@ -28,7 +26,7 @@ function handle(ctx: PicGo) {
     })
     .map((info) => {
       const options = { ctx, info }
-      ctx.log.warn("compress type:"+compress)
+      ctx.log.warn("compress type:" + compress)
       return Promise.resolve()
         .then(() => {
           switch (compress) {
@@ -38,9 +36,6 @@ function handle(ctx: PicGo) {
               return imageminCompress(options)
             case CompressType.luban:
               return lubanCompress(options)
-            case CompressType.upng:
-              return upngCompress(options)
-            case CompressType.none:
             default:
               return lubanCompress(options)
           }

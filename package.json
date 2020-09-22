@@ -29,7 +29,6 @@
     "@types/fs-extra": "^8.1.0",
     "@types/imagemin": "^7.0.0",
     "@types/imagemin-mozjpeg": "^8.0.0",
-    "@types/imagemin-optipng": "^5.2.0",
     "@types/node": "^12.12.36",
     "@types/request": "^2.48.4",
     "@types/request-promise-native": "^1.0.17",
@@ -48,7 +47,6 @@
     "imagemin": "^7.0.1",
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-optipng": "^7.1.0",
     "imagemin-upng": "^2.0.2",
     "images": "^3.2.3",
     "request": "^2.88.2"
