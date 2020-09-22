@@ -51,9 +51,6 @@
     "imagemin-optipng": "^7.1.0",
     "imagemin-upng": "^2.0.2",
     "images": "^3.2.3",
-    "jpeg-js": "^0.4.2",
-    "png-js": "^1.0.0",
-    "png-to-jpeg": "^1.0.1",
     "request": "^2.88.2"
   }
 }
