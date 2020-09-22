@@ -56,8 +56,22 @@ function  computeInSampleSize(srcWidth :number, srcHeight:number) {
     })
     .then((buffer)=>{
       var image2 = images(buffer)
+      ctx.log.warn('图片尺寸:'+image2.width()+"x"+image2.height())
       //todo 关键在于获取图片本身的宽高
       var samplesize = computeInSampleSize(image2.width(),image2.height())
+      if(samplesize <=1){
+        return buffer
+      }
+      var size2 = Math.round(buffer.length/1024)
+      if(size2 <150){
+        //150k以下,不压缩
+        return buffer
+      }
+      var longsize = image2.width() > image2.height() ? image2.width() :image2.height()
+      //长边大于2500,且文件大小小于1024k,就不压缩
+      if(size2 < 1024 && longsize> 2500){
+        return buffer
+      }
       var conpressWidth = image2.width()/samplesize
       ctx.log.warn('转换成jpg后文件大小:'+Math.round(buffer.length/1024)+"k")
       ctx.log.warn('准备用luban算法压缩:宽度变化:'+image2.width()+"-->"+conpressWidth)
