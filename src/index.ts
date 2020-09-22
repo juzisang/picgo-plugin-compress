@@ -9,7 +9,9 @@ import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 import { upngCompress } from './compress/upng'
+import { lubanCompress } from './compress/luban'
 
+//npm install /Users/hss/github/picgo-plugin-compress
 function handle(ctx: PicGo) {
   const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
   const compress = config?.compress
@@ -26,6 +28,7 @@ function handle(ctx: PicGo) {
     })
     .map((info) => {
       const options = { ctx, info }
+      ctx.log.warn("compress type:"+compress)
       return Promise.resolve()
         .then(() => {
           switch (compress) {
@@ -33,11 +36,13 @@ function handle(ctx: PicGo) {
               return key ? tinypngKeyCompress({ ...options, key }) : tinypngCompress(options)
             case CompressType.imagemin:
               return imageminCompress(options)
+            case CompressType.luban:
+              return lubanCompress(options)
             case CompressType.upng:
               return upngCompress(options)
             case CompressType.none:
             default:
-              return defaultCompress(options)
+              return lubanCompress(options)
           }
         })
         .then((info) => {
@@ -78,7 +83,7 @@ module.exports = function (ctx: PicGo): any {
           type: 'list',
           message: '选择压缩库',
           choices: Object.keys(CompressType),
-          default: config.compress || CompressType.imagemin,
+          default: config.compress || CompressType.luban,
           required: true,
         },
         {

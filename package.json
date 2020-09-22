@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-compress",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "Image compression plugin for PicGo",
   "main": "dist/index.js",
   "publishConfig": {
@@ -46,9 +46,11 @@
     "fs-extra": "^9.0.0",
     "image-size": "^0.8.3",
     "imagemin": "^7.0.1",
+    "imagemin-jpegtran": "^7.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-optipng": "^7.1.0",
     "imagemin-upng": "^2.0.2",
+    "images": "^3.2.3",
     "request": "^2.88.2"
   }
 }
