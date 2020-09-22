@@ -41,8 +41,8 @@
 
 ## 压缩效果对比
 
-| 类型   | tinypng                  | luban                  | imagemin                  |
-| ------ | ------------------------ | ---------------------- | ------------------------- |
-| 原大小 | 1.5 MB                   | 1.5 MB                 | 1.5 MB                    |
-| 压缩后 | 315 KB                   | 276 KB                 | 411 KB                    |
-| 效果图 | ![](./tests/tinypng.png) | ![](./tests/luban.png) | ![](./tests/imagemin.png) |
+| 类型   | tinypng                                                                                        | luban                                                                                        | imagemin                                                                                        |
+| ------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 原大小 | 1.5 MB                                                                                         | 1.5 MB                                                                                       | 1.5 MB                                                                                          |
+| 压缩后 | 315 KB                                                                                         | 276 KB                                                                                       | 411 KB                                                                                          |
+| 效果图 | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/tinypng.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/luban.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/imagemin.png) |
