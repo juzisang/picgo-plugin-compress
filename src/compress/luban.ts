@@ -84,12 +84,17 @@ function  computeInSampleSize(srcWidth :number, srcHeight:number) {
       var image2 = images(buffer)
       ctx.log.warn('图片尺寸:'+image2.width()+"x"+image2.height())
       //todo 关键在于获取图片本身的宽高
-      var sample = Math.floor(computeInSampleSize(image2.width(),image2.height()))
+      var sample = Math.round(computeInSampleSize(image2.width(),image2.height()))
       var filesize = Math.round(buffer.length/1024)
-
+      var longsize = image2.width() > image2.height() ? image2.width() :image2.height()
       var sampleSize = ['1x1'];
       if(filesize > 100 && sample >1){
-        sampleSize = [sample+'x'+sample]
+        if(longsize >3000 && filesize< 700){
+
+        }else {
+          sampleSize = [sample+'x'+sample]
+        }
+
       }
       ctx.log.warn('sampleSize:'+sampleSize[0])
 
