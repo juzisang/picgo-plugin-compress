@@ -4,8 +4,9 @@ import optipng from 'imagemin-optipng'
 import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import { getImageBuffer } from '../utils/getImage'
 var images = require("images");
+const isGif = require('is-gif');
 
-
+//由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取
 
 export function lubanCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
   /*function getSample(info: ImgInfo) {
@@ -51,6 +52,9 @@ function  computeInSampleSize(srcWidth :number, srcHeight:number) {
         ctx.log.warn('本身就是jpg,不用转换:'+info.url)
         return buffer
       }
+      if(isGif(buffer)){
+        return buffer
+      }
       ctx.log.warn('luban  格式转换为jpg:'+info.url)
       return  images(buffer).encode("jpg")//, {operation:90}
     })
@@ -83,6 +87,10 @@ function  computeInSampleSize(srcWidth :number, srcHeight:number) {
 
       var image2 = images(buffer)
       ctx.log.warn('图片尺寸:'+image2.width()+"x"+image2.height())
+      if(isGif(buffer)){
+        ctx.log.warn('gif图,不压缩')
+        return buffer
+      }
       //todo 关键在于获取图片本身的宽高
       var sample = Math.round(computeInSampleSize(image2.width(),image2.height()))
       var filesize = Math.round(buffer.length/1024)

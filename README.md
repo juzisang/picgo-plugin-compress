@@ -29,9 +29,17 @@
   
   - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:
 
-    ![image-20200922212916280](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781356315.jpeg)
+    配置的是github仓库,主要耗时在上传,大约6-8s不等.
 
+    
+  
+    ![image-20200923095328713](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/image-20200923095328713.png)
+  
   ![image-20200922213104719](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781464747.jpeg)
+  
+  ![image-20200923095234284](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/image-20200923095234284.png)
+  
+  
   
   nameType 是否重命名
   
