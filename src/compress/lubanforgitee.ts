@@ -2,9 +2,11 @@ import imagemin from 'imagemin'
 import mozjpeg from 'imagemin-mozjpeg'
 import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import { getImageBuffer } from '../utils/getImage'
+import imageminGifsicle from 'imagemin-gifsicle'
 
 var images = require('images')
 const isGif = require('is-gif')
+const thehold = 1023
 
 //由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取,通过这个工具将图压到1M以下
 
@@ -47,16 +49,21 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
 
   return getImageBuffer(ctx, info.url)
     .then((buffer) => {
-      ctx.log.warn('原始文件大小:' + Math.round(buffer.length / 1024) + 'k')
+      ctx.log.warn('原始文件大小:' + Math.round(buffer.length / 1024) + 'k ,'+ info.url)
       if (isJpg(buffer)) {
         ctx.log.warn('本身就是jpg,不用转换:' + info.url)
         return buffer
       }
-      if (isGif(buffer) && Math.round(buffer.length / 1024) < 1024) {
-        //大于1M的gif,强制压缩成jpg
-        return buffer
+      if(isGif(buffer) ){
+        if(Math.round(buffer.length / 1024) < thehold){
+          return buffer
+        }
+        ctx.log.warn('gif图执行压缩:' + info.url)
+        return   imagemin.buffer(buffer, {
+          plugins: [imageminGifsicle({ colors: 16, optimizationLevel: 2 })]//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+        })
       }
-      ctx.log.warn('luban  格式转换为jpg:' + info.url)
+      ctx.log.warn('luban  格式转换为jpg' )
       return images(buffer).encode('jpg')//, {operation:90}
     })
     .then((buffer) => {
@@ -64,11 +71,16 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
 
       var image2 = images(buffer)
       ctx.log.warn('图片尺寸:' + image2.width() + 'x' + image2.height())
-      if (isGif(buffer)) {
-        ctx.log.info('gif图,不压缩')
-        return buffer
+      if(isGif(buffer) ){
+        //再次看gif
+        if(Math.round(buffer.length / 1024) < thehold){
+          return buffer
+        }
+        ctx.log.warn('gif图再次执行压缩:')
+        return imagemin.buffer(buffer, {
+          plugins: [imageminGifsicle({ colors: 8, optimizationLevel: 3 })]//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+        })
       }
-      //todo 关键在于获取图片本身的宽高
       var sample = Math.round(computeInSampleSize(image2.width(), image2.height()))
       var filesize = Math.round(buffer.length / 1024)
       var longsize = image2.width() > image2.height() ? image2.width() : image2.height()
@@ -88,8 +100,15 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     })
     .then((buffer) => {
       //最终第一道检查
-      if (Math.round(buffer.length / 1024) < 1024) {
+      if (Math.round(buffer.length / 1024) < thehold) {
         return buffer
+      }
+      if(isGif(buffer) ) {
+        //gif图,大于1M,
+        ctx.log.warn('gif图压了两边都没有压到1M以下,不搞了,直接转换为jpg' )
+        return imagemin.buffer(images(buffer).encode('jpg'), {
+          plugins: [mozjpeg({ quality: 75, sample: ['1x1'] })]
+        })
       }
       ctx.log.warn(Math.round(buffer.length / 1024) + 'k,大于1M,继续压,sampleSize:2x1,质量65')
       return imagemin.buffer(buffer, {
@@ -98,7 +117,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     })
     .then((buffer) => {
       //最终第二道检查
-      if (Math.round(buffer.length / 1024) < 1024) {
+      if (Math.round(buffer.length / 1024) < thehold) {
         return buffer
       }
       ctx.log.warn(Math.round(buffer.length / 1024) + 'k,大于1M,继续压,sampleSize:1x2,质量60')
@@ -107,7 +126,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
       })
     })
     .then((buffer) => {
-      ctx.log.warn('最后mozjpeg  compress in success,最终文件大小:' + Math.round(buffer.length / 1024) + 'k')
+      ctx.log.warn('最后compress in success,最终文件大小:' + Math.round(buffer.length / 1024) + 'k')
       return {
         ...info,
         buffer
