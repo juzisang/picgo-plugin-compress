@@ -27,10 +27,16 @@
   
 - none 不压缩
   
-  - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:
+  - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:配置的是github仓库,主要耗时在上传,大约6-8s不等. gif图不受影响.png图会转换成jpg图
 
-    配置的是github仓库,主要耗时在上传,大约6-8s不等.
+  - lubanforgitee  针对gitee的1M以上文件不能外链访问的限制,将所有图片压到1M以下,此时,gif图会强制转换成jpg静态图
 
+  - none 不压缩
+  
+    
+  
+    
+  
     
   
     ![image-20200923095328713](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/image-20200923095328713.png)
