@@ -23,13 +23,15 @@
   - [imagemin](https://github.com/imagemin/imagemin) +luban 算法，最大程度节省流量，默认选项
   - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，但是图片会有损耗
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
+  - lubanforgitee  将所有图片压缩到1M以下,解决gitee的1M外链不能访问的问题. 注意,此配置下,gif图会变成jpg静态图.
 
-  nameType 是否重命名
+nameType 是否重命名
 
   - timestamp 重命名成时间戳
-  - none 不重名，默认选项
+- none 不重名，默认选项
+  
 
-  key 可选
+key 可选
 
   - 在 [developers](https://tinypng.com/developers) 中申请
   - 逗号`,`隔开，可使用多个 Key 叠加使用次数

@@ -11,4 +11,5 @@ export enum CompressType {
   tinypng = 'tinypng',
   imagemin = 'imagemin',
   luban = 'luban',
+  lubangitee = 'lubangitee',
 }

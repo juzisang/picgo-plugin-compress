@@ -8,6 +8,7 @@ import { imageminCompress } from './compress/imagemin'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 import { lubanCompress } from './compress/luban'
+import { lubanforgiteeCompress } from './compress/lubanforgitee'
 
 //npm install /Users/hss/github/picgo-plugin-compress
 function handle(ctx: PicGo) {
@@ -36,6 +37,8 @@ function handle(ctx: PicGo) {
               return imageminCompress(options)
             case CompressType.luban:
               return lubanCompress(options)
+            case CompressType.lubangitee:
+              return lubanforgiteeCompress(options)
             default:
               return lubanCompress(options)
           }

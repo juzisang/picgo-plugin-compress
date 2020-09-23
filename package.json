@@ -49,6 +49,7 @@
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-upng": "^2.0.2",
     "images": "^3.2.3",
+    "is-gif": "^3.0.0",
     "request": "^2.88.2"
   }
 }

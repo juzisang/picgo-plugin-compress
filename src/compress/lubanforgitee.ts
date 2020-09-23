@@ -6,9 +6,9 @@ import { getImageBuffer } from '../utils/getImage'
 var images = require('images')
 const isGif = require('is-gif')
 
-//由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取
+//由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取,通过这个工具将图压到1M以下
 
-export function lubanCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
+export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
   /*function getSample(info: ImgInfo) {
     return ['1x1']
   }*/
@@ -52,43 +52,20 @@ export function lubanCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> 
         ctx.log.warn('本身就是jpg,不用转换:' + info.url)
         return buffer
       }
-      if (isGif(buffer)) {
+      if (isGif(buffer) && Math.round(buffer.length / 1024) < 1024) {
+        //大于1M的gif,强制压缩成jpg
         return buffer
       }
       ctx.log.warn('luban  格式转换为jpg:' + info.url)
       return images(buffer).encode('jpg')//, {operation:90}
     })
-    /*.then((buffer)=>{
-      var image2 = images(buffer)
-      ctx.log.warn('图片尺寸:'+image2.width()+"x"+image2.height())
-      //todo 关键在于获取图片本身的宽高
-      var samplesize = computeInSampleSize(image2.width(),image2.height())
-      if(samplesize <=1){
-        return buffer
-      }
-      var size2 = Math.round(buffer.length/1024)
-      if(size2 <150){
-        //150k以下,不压缩
-        return buffer
-      }
-      var longsize = image2.width() > image2.height() ? image2.width() :image2.height()
-      //长边大于2500,且文件大小小于1024k,就不压缩
-      if(size2 < 1024 && longsize> 2500){
-        return buffer
-      }
-      var conpressWidth = image2.width()/samplesize
-      ctx.log.warn('转换成jpg后文件大小:'+Math.round(buffer.length/1024)+"k")
-      ctx.log.warn('准备用luban算法压缩:宽度变化:'+image2.width()+"-->"+conpressWidth)
-
-      return  image2.resize(conpressWidth).encode("jpg")//, {operation:90}
-    })*/
     .then((buffer) => {
       ctx.log.warn('文件大小:' + Math.round(buffer.length / 1024) + 'k')
 
       var image2 = images(buffer)
       ctx.log.warn('图片尺寸:' + image2.width() + 'x' + image2.height())
       if (isGif(buffer)) {
-        ctx.log.warn('gif图,不压缩')
+        ctx.log.info('gif图,不压缩')
         return buffer
       }
       //todo 关键在于获取图片本身的宽高
@@ -102,12 +79,31 @@ export function lubanCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> 
         } else {
           sampleSize = [sample + 'x' + sample]
         }
-
       }
-      ctx.log.warn('sampleSize:' + sampleSize[0])
+      ctx.log.warn('sampleSize:' + sampleSize[0] + ',质量75')
 
       return imagemin.buffer(buffer, {
         plugins: [mozjpeg({ quality: 75, sample: sampleSize })]//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+      })
+    })
+    .then((buffer) => {
+      //最终第一道检查
+      if (Math.round(buffer.length / 1024) < 1024) {
+        return buffer
+      }
+      ctx.log.warn(Math.round(buffer.length / 1024) + 'k,大于1M,继续压,sampleSize:2x1,质量65')
+      return imagemin.buffer(buffer, {
+        plugins: [mozjpeg({ quality: 65, sample: ['2x1'] })]
+      })
+    })
+    .then((buffer) => {
+      //最终第二道检查
+      if (Math.round(buffer.length / 1024) < 1024) {
+        return buffer
+      }
+      ctx.log.warn(Math.round(buffer.length / 1024) + 'k,大于1M,继续压,sampleSize:1x2,质量60')
+      return imagemin.buffer(buffer, {
+        plugins: [mozjpeg({ quality: 60, sample: ['1x2'] })]
       })
     })
     .then((buffer) => {
