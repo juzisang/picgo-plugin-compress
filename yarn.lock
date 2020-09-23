@@ -110,13 +110,6 @@
   dependencies:
     "@types/imagemin" "*"
 
-"@types/imagemin-optipng@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.npm.taobao.org/@types/imagemin-optipng/download/@types/imagemin-optipng-5.2.0.tgz#83046e0695739661fa738ad253bdbf51bc4f9e9d"
-  integrity sha1-gwRuBpVzlmH6c4rSU72/UbxPnp0=
-  dependencies:
-    "@types/imagemin" "*"
-
 "@types/imagemin@*", "@types/imagemin@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/@types/imagemin/download/@types/imagemin-7.0.0.tgz#cb99d719190ebe421015213733d656fac1f8af2e"
@@ -2160,15 +2153,6 @@ imagemin-mozjpeg@^8.0.0:
     is-jpg "^2.0.0"
     mozjpeg "^6.0.0"
 
-imagemin-optipng@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npm.taobao.org/imagemin-optipng/download/imagemin-optipng-7.1.0.tgz#2225c82c35e5c29b7fa98d4f9ecee1161a68e888"
-  integrity sha1-IiXILDXlwpt/qY1Pns7hFhpo6Ig=
-  dependencies:
-    exec-buffer "^3.0.0"
-    is-png "^2.0.0"
-    optipng-bin "^6.0.0"
-
 imagemin-upng@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/imagemin-upng/-/imagemin-upng-2.0.2.tgz#69f45316222ac301d7ca7fab73a3d4d81ecae2a3"
@@ -2189,6 +2173,11 @@ imagemin@^7.0.1:
     make-dir "^3.0.0"
     p-pipe "^3.0.0"
     replace-ext "^1.0.0"
+
+images@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.npm.taobao.org/images/download/images-3.2.3.tgz#8e86421df163d9b3a60ee4d1dc7cd8205f2d2bd7"
+  integrity sha1-joZCHfFj2bOmDuTR3HzYIF8tK9c=
 
 import-fresh@^3.0.0:
   version "3.2.1"
@@ -2425,7 +2414,7 @@ is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
-is-png@2.0.0, is-png@^2.0.0:
+is-png@2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/is-png/download/is-png-2.0.0.tgz#ee8cbc9e9b050425cedeeb4a6fb74a649b0a4a8d"
   integrity sha1-7oy8npsFBCXO3utKb7dKZJsKSo0=
@@ -2504,16 +2493,6 @@ isurl@^1.0.0-alpha5:
   dependencies:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
-
-jpeg-js@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.1.2.tgz#135b992c0575c985cfa0f494a3227ed238583ece"
-  integrity sha1-E1uZLAV1yYXPoPSUoyJ+0jhYPs4=
-
-jpeg-js@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.2.tgz#8b345b1ae4abde64c2da2fe67ea216a114ac279d"
-  integrity sha512-+az2gi/hvex7eLTMTlbRLOhH6P6WFdk2ITI8HJsaH2VqYO0I594zXSYEP+tf4FW+8Cy68ScDXoAsQdyQanv3sw==
 
 jpegtran-bin@^5.0.0:
   version "5.0.2"
@@ -3059,15 +3038,6 @@ optionator@^0.8.1, optionator@^0.8.3:
     type-check "~0.3.2"
     word-wrap "~1.2.3"
 
-optipng-bin@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npm.taobao.org/optipng-bin/download/optipng-bin-6.0.0.tgz#376120fa79d5e71eee2f524176efdd3a5eabd316"
-  integrity sha1-N2Eg+nnV5x7uL1JBdu/dOl6r0xY=
-  dependencies:
-    bin-build "^3.0.0"
-    bin-wrapper "^4.0.0"
-    logalot "^2.0.0"
-
 os-filter-obj@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/os-filter-obj/download/os-filter-obj-2.0.0.tgz#1c0b62d5f3a2442749a2d139e6dddee6e81d8d16"
@@ -3331,25 +3301,6 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.npm.taobao.org/pinkie/download/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
-
-png-js@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/png-js/-/png-js-0.1.1.tgz#1cc7c212303acabe74263ec3ac78009580242d93"
-  integrity sha1-HMfCEjA6yr50Jj7DrHgAlYAkLZM=
-
-png-js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/png-js/-/png-js-1.0.0.tgz#e5484f1e8156996e383aceebb3789fd75df1874d"
-  integrity sha512-k+YsbhpA9e+EFfKjTCH3VW6aoKlyNYI6NYdTfDL4CIvFnvsuO84ttonmZE7rc+v23SLTH8XX+5w/Ak9v0xGY4g==
-
-png-to-jpeg@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/png-to-jpeg/-/png-to-jpeg-1.0.1.tgz#14362c6aaaec5ea6b52fa3504f5ecc760b4e7424"
-  integrity sha1-FDYsaqrsXqa1L6NQT17MdgtOdCQ=
-  dependencies:
-    jpeg-js "^0.1.2"
-    pify "^2.3.0"
-    png-js "^0.1.1"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"

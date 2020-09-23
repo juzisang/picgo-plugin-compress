@@ -15,7 +15,7 @@ function getHeaders() {
 }
 
 export function tinypngCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
-  ctx.log.info('TinyPng Web Upload')
+  ctx.log.info('TinypngWeb 开始上传')
   return getImageBuffer(ctx, info.url).then((buffer) => {
     const req = ctx.Request.request({
       url: TINYPNG_WEBUPLOAD_URL,
@@ -27,10 +27,10 @@ export function tinypngCompress({ ctx, info }: CompressOptions): Promise<ImgInfo
     return req
       .then((data: Response) => {
         if (data.headers.location) {
-          ctx.log.info('TinyPng Web Upload Success:' + data.headers.location)
+          ctx.log.info('TinypngWeb 上传成功:' + data.headers.location)
           return getImageBuffer(ctx, data.headers.location)
         }
-        throw new Error('TinyPng Web Upload Error')
+        throw new Error('TinypngWeb 上传失败')
       })
       .then((buffer) => {
         return {

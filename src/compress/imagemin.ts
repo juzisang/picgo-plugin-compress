@@ -1,19 +1,20 @@
 import imagemin from 'imagemin'
 import mozjpeg from 'imagemin-mozjpeg'
-import optipng from 'imagemin-optipng'
+import upng from 'imagemin-upng'
 import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import { getImageBuffer } from '../utils/getImage'
 
 export function imageminCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
+  ctx.log.info('imagemin 压缩开始')
   return getImageBuffer(ctx, info.url)
     .then((buffer) => {
-      ctx.log.info('imagemin compress in progress')
+      ctx.log.info('imagemin 压缩完成')
       return imagemin.buffer(buffer, {
-        plugins: [mozjpeg({ quality: 75, progressive: true }), optipng({ optimizationLevel: 5 })],
+        plugins: [mozjpeg({ quality: 75, progressive: true }), upng()],
       })
     })
     .then((buffer) => {
-      ctx.log.info('imagemin compress in success')
+      ctx.log.info('imagemin 压缩失败')
       return {
         ...info,
         buffer,

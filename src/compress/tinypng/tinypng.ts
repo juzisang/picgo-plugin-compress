@@ -28,9 +28,11 @@ class TinyPng {
     this.PicGo = options.ctx
     this.options = options
     await this.readOrWriteConfig(this.options.keys)
+    this.PicGo.log.info('TinyPng初始化')
   }
 
   async upload(url: string) {
+    this.PicGo.log.info('TinyPng开始上传')
     if (isUrl(url)) {
       return this.uploadImage({ url, originalUrl: url, key: await this.getKey() })
     } else {
@@ -52,7 +54,7 @@ class TinyPng {
   }
 
   private uploadImage(options: { key: string; originalUrl: string; url?: string; buffer?: Buffer }): Promise<Buffer> {
-    this.PicGo.log.info('key:' + options.key)
+    this.PicGo.log.info('使用TinypngKey:' + options.key)
 
     const bearer = Base64.stringify(Utf8.parse(`api:${options.key}`))
 
@@ -68,7 +70,7 @@ class TinyPng {
     }
 
     if (options.url) {
-      this.PicGo.log.info('上传网络图片')
+      this.PicGo.log.info('TinyPng 上传网络图片')
       Object.assign(fetchOptions.headers, {
         'Content-Type': 'application/json',
       })
@@ -84,7 +86,7 @@ class TinyPng {
     const req = this.PicGo.Request.request(fetchOptions)
 
     if (options.buffer) {
-      this.PicGo.log.info('上传本地图片')
+      this.PicGo.log.info('TinyPng 上传本地图片')
       req.end(options.buffer)
     }
 

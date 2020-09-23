@@ -13,47 +13,24 @@
 
 - 安装 `picgo add compress`
 
-- 选择使用 compress `picgo use transformer`
+- 选择使用 `picgo use transformer`
 
 - 参数配置 `picgo config plugin compress`
 
   compress 选择压缩工具
+  默认选项
 
-  - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，速度快，但是图片会有损耗，默认选项
-  
+  - [imagemin](https://github.com/imagemin/imagemin) +luban 算法，最大程度节省流量，默认选项
+  - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，但是图片会有损耗
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
-  
-- [upng](https://github.com/photopea/UPNG.js) upng 无损压缩
-  
-- none 不压缩
-  
-  - luban [imagemin](https://github.com/imagemin/imagemin) +luban算法,最大程度节省流量,效果如下:配置的是github仓库,主要耗时在上传,大约6-8s不等. gif图不受影响.png图会转换成jpg图
 
-  - lubanforgitee  针对gitee的1M以上文件不能外链访问的限制,将所有图片压到1M以下,此时,gif图会强制转换成jpg静态图
-
-  - none 不压缩
-  
-    
-  
-    
-  
-    
-  
-    ![image-20200923095328713](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/image-20200923095328713.png)
-  
-  ![image-20200922213104719](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/1600781464747.jpeg)
-  
-  ![image-20200923095234284](https://cdn.jsdelivr.net/gh/hss01248/picbed@master/pic/image-20200923095234284.png)
-  
-  
-  
   nameType 是否重命名
-  
+
   - timestamp 重命名成时间戳
   - none 不重名，默认选项
-  
+
   key 可选
-  
+
   - 在 [developers](https://tinypng.com/developers) 中申请
   - 逗号`,`隔开，可使用多个 Key 叠加使用次数
 
@@ -62,5 +39,10 @@
 - 打开详细窗口 > 插件设置 > 搜索 `compress` 即可安装，配置同上
 - 离线安装参考[这里](https://picgo.github.io/PicGo-Core-Doc/zh/dev-guide/deploy.html#gui%E6%8F%92%E4%BB%B6)
 
+## 压缩效果对比
 
-
+| 类型   | tinypng                                                                                        | luban                                                                                        | imagemin                                                                                        |
+| ------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 原大小 | 1.5 MB                                                                                         | 1.5 MB                                                                                       | 1.5 MB                                                                                          |
+| 压缩后 | 315 KB                                                                                         | 276 KB                                                                                       | 411 KB                                                                                          |
+| 效果图 | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/tinypng.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/luban.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/imagemin.png) |
