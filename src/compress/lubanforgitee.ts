@@ -60,7 +60,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
         }
         ctx.log.warn('gif图执行压缩:' + info.url)
         return   imagemin.buffer(buffer, {
-          plugins: [imageminGifsicle({ colors: 16, optimizationLevel: 2 })]//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+          plugins: [imageminGifsicle({ colors: 16, optimizationLevel: 3 })]//, optipng({ optimizationLevel: 5 })//, sample:sampleSize
         })
       }
       ctx.log.warn('luban  格式转换为jpg' )
