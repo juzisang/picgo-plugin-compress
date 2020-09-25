@@ -27,7 +27,7 @@ function handle(ctx: PicGo) {
     })
     .map((info) => {
       const options = { ctx, info }
-      ctx.log.warn("compress type:" + compress)
+      ctx.log.warn('compress type:' + compress)
       return Promise.resolve()
         .then(() => {
           switch (compress) {
