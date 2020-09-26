@@ -8,13 +8,12 @@ export function imageminCompress({ ctx, info }: CompressOptions): Promise<ImgInf
   ctx.log.info('imagemin 压缩开始')
   return getImageBuffer(ctx, info.url)
     .then((buffer) => {
-      ctx.log.info('imagemin 压缩完成')
       return imagemin.buffer(buffer, {
         plugins: [mozjpeg({ quality: 75, progressive: true }), upng()],
       })
     })
     .then((buffer) => {
-      ctx.log.info('imagemin 压缩失败')
+      ctx.log.info('imagemin 压缩完成')
       return {
         ...info,
         buffer,
