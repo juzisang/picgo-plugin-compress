@@ -5,9 +5,9 @@ export function reName(nameType: string, url: string): string {
   const fileName = path.basename(url)
   switch (nameType) {
     case NameType.timestamp:
-      return `${Date.now()}-` + fileName
+      return `${Date.now()}-` + fileName.replace('.png', '.jpg')
     case NameType.none:
     default:
-      return `${fileName}`
+      return `${fileName}`.replace('.png', '.jpg')
   }
 }
