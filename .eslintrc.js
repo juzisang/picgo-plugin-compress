@@ -3,10 +3,11 @@ module.exports = {
   extends: ['plugin:prettier/recommended'],
   plugins: ['prettier'],
   env: {
-    node: true,
+    node: true
   },
   parserOptions: {
     ecmaVersion: 2019,
-    sourceType: "module"
-  }
+    sourceType: 'module'
+  },
+  rules: { 'prettier/prettier': ['error', { 'endOfLine': 'auto' }] }
 }
