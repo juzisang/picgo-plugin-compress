@@ -4,21 +4,21 @@ import { CompressOptions, ImgInfo } from '../utils/interfaces'
 import { getImageBuffer } from '../utils/getImage'
 import imageminGifsicle from 'imagemin-gifsicle'
 
-import isPng from 'is-png'
-
-//import isWebp from 'is-webp'
-
 var images = require('images')
 const isGif = require('is-gif')
+// this will grant 755 permission to webp executables
+
 /*const isPng = require('is-png')
 const isWebp = require('is-webp')*/
 const thehold = 1023
-const jpgQuality = 85
+const jpgQuality = 80
 const gifcolors = 32
 
 //由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取,通过这个工具将图压到1M以下
 
 export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<ImgInfo> {
+  var originalSize = 0
+
   function computeInSampleSize(srcWidth: number, srcHeight: number) {
     srcWidth = srcWidth % 2 == 1 ? srcWidth + 1 : srcWidth
     srcHeight = srcHeight % 2 == 1 ? srcHeight + 1 : srcHeight
@@ -46,6 +46,31 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
 
   function isJpg(buffer: Buffer) {
     return buffer[0] === 255 && buffer[1] === 216 && buffer[2] === 255
+  }
+
+  function isWebp(buf: Buffer) {
+    if (!buf || buf.length < 12) {
+      return false
+    }
+
+    return buf[8] === 87 && buf[9] === 69 && buf[10] === 66 && buf[11] === 80
+  }
+
+  function isPng(buffer: Buffer) {
+    if (!buffer || buffer.length < 8) {
+      return false
+    }
+
+    return (
+      buffer[0] === 0x89 &&
+      buffer[1] === 0x50 &&
+      buffer[2] === 0x4e &&
+      buffer[3] === 0x47 &&
+      buffer[4] === 0x0d &&
+      buffer[5] === 0x0a &&
+      buffer[6] === 0x1a &&
+      buffer[7] === 0x0a
+    )
   }
 
   function compressJpg(buffer: Buffer, quality: number): Promise<Buffer> {
@@ -96,6 +121,13 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     return compressJpg(buffer1, jpgQuality)
   }
 
+  function compressWebP(buffer: Buffer): Promise<Buffer> {
+    //todo 先判断有没有透明通道
+    ctx.log.warn('webp  格式转换为jpg')
+    var buffer1: Buffer = images(buffer).encode('jpg')
+    return compressJpg(buffer1, jpgQuality)
+  }
+
   // gif图的递归压缩算法
   function compressGif(buffer: Buffer, colors: number): Promise<Buffer> {
     if (Math.round(buffer.length / 1024) < thehold) {
@@ -122,15 +154,18 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
 
   return getImageBuffer(ctx, info.url)
     .then((buffer) => {
+      originalSize = buffer.length
       ctx.log.warn('原始文件大小:' + Math.round(buffer.length / 1024) + 'k ,' + info.url)
       if (isJpg(buffer)) {
         ctx.log.warn('本身就是jpg,不用转换:' + info.url)
         return compressJpg(buffer, jpgQuality)
       } else if (isPng(buffer)) {
-        ctx.log.warn('本身就是jpg,不用转换:' + info.url)
+        ctx.log.warn('isPng,转换成jpg:' + info.url)
         return compressPng(buffer)
       } else if (isGif(buffer)) {
         return compressGif(buffer, gifcolors)
+      } else if (isWebp(buffer)) {
+        return buffer
       } else {
         ctx.log.warn('其他类型图片,转换成jpg:')
         return compressPng(buffer)
@@ -139,6 +174,11 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     .then((buffer) => {
       //最终第二道检查
       if (Math.round(buffer.length / 1024) < thehold) {
+        //压缩后比压缩前还大,就用压缩前的
+        if (buffer.length > originalSize) {
+          ctx.log.warn('压缩后比压缩前还大,就用压缩前的原图')
+          return getImageBuffer(ctx, info.url)
+        }
         return buffer
       }
       if (isGif(buffer)) {
