@@ -124,8 +124,11 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
   function compressWebP(buffer: Buffer): Promise<Buffer> {
     //todo 先判断有没有透明通道
     ctx.log.warn('webp  格式转换为jpg')
-    var buffer1: Buffer = images(buffer).encode('jpg')
-    return compressJpg(buffer1, jpgQuality)
+    /*return imagemin
+      .buffer(buffer, {
+        plugins: [mozjpeg({ quality: 70, sample: ['1x1'] })] //, optipng({ optimizationLevel: 5 })//, sample:sampleSize
+      })*/
+    return Promise.resolve(buffer)
   }
 
   // gif图的递归压缩算法
@@ -165,7 +168,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
       } else if (isGif(buffer)) {
         return compressGif(buffer, gifcolors)
       } else if (isWebp(buffer)) {
-        return buffer
+        return compressWebP(buffer)
       } else {
         ctx.log.warn('其他类型图片,转换成jpg:')
         return compressPng(buffer)
