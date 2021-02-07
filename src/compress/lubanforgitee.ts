@@ -11,7 +11,7 @@ const isGif = require('is-gif')
 /*const isPng = require('is-png')
 const isWebp = require('is-webp')*/
 const thehold = 1023
-const jpgQuality = 80
+const jpgQuality = 75
 const gifcolors = 32
 
 //由于gitee文件大小有1mb限制, 所以超过1mb的文件无法通过外链获取,通过这个工具将图压到1M以下
@@ -89,7 +89,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     if (filesize > 100 && sample > 1) {
       if (longsize > 3000 && filesize < 700) {
       } else {
-        sampleSize = [sample + 'x' + sample]
+        sampleSize = [sample + 'x' + 1]
       }
     }
     ctx.log.warn('sampleSize:' + sampleSize[0] + ',质量' + quality)
