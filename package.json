@@ -63,6 +63,7 @@
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-upng": "^2.0.2",
+    "imagemin-webp": "^6.0.0",
     "images": "^3.2.3",
     "is-gif": "^3.0.0",
     "request": "^2.88.2"

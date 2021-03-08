@@ -5,6 +5,7 @@ import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
 import { tinypngCompress } from './compress/tinypngweb'
 import { tinypngKeyCompress } from './compress/tinypng/index'
 import { imageminCompress } from './compress/imagemin'
+import { imageminWebPCompress } from './compress/imagemin_webp'
 import { NameType, CompressType } from './config'
 import { reName } from './utils/reName'
 import { lubanCompress } from './compress/luban'
@@ -39,6 +40,8 @@ function handle(ctx: PicGo) {
               return lubanCompress(options)
             case CompressType.lubangitee:
               return lubanforgiteeCompress(options)
+            case CompressType.imagemin_webp:
+              return imageminWebPCompress(options)
             default:
               return lubanCompress(options)
           }

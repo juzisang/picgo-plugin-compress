@@ -10,6 +10,7 @@ export enum NameType {
 export enum CompressType {
   tinypng = 'tinypng',
   imagemin = 'imagemin',
+  imagemin_webp = 'imagemin_webp',
   luban = 'luban',
   lubangitee = 'lubangitee',
 }
