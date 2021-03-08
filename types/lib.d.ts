@@ -5,3 +5,7 @@ declare module 'imagemin-upng' {
 declare module 'imagemin-webp' {
   export default imageminWebp
 }
+
+declare module 'imagemin-gif2webp' {
+  export default imageminGif2webp
+}
