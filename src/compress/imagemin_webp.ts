@@ -14,9 +14,18 @@ export function imageminWebPCompress({ ctx, info }: CompressOptions): Promise<Im
     })
     .then((buffer) => {
       ctx.log.info('imagemin_webp 压缩完成')
+      info.extname = 'webp'
+      info.fileName = changeExt(info.fileName, 'webp')
       return {
         ...info,
         buffer,
       }
     })
+}
+
+// https://stackoverflow.com/questions/5953239/how-do-i-change-file-extension-with-javascript
+function changeExt(fileName: String, newExt: String) {
+  var pos = fileName.includes('.') ? fileName.lastIndexOf('.') : fileName.length
+  var fileRoot = fileName.substr(0, pos)
+  return `${fileRoot}.${newExt}`
 }
