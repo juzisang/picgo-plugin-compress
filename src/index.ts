@@ -11,9 +11,16 @@ import { reName } from './utils/reName'
 import { lubanCompress } from './compress/luban'
 import { lubanforgiteeCompress } from './compress/lubanforgitee'
 
+interface IConfig {
+  compress: string
+  key: string
+  tinypngKey: string
+  nameType: string
+}
+
 //npm install /Users/hss/github/picgo-plugin-compress
 function handle(ctx: PicGo) {
-  const config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
+  const config: IConfig = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
   const compress = config?.compress
   const nameType = config?.nameType
   const key = config.key || config.tinypngKey
@@ -84,7 +91,7 @@ module.exports = function (ctx: PicGo): any {
           type: 'list',
           message: '选择压缩库',
           choices: Object.keys(CompressType),
-          default: config.compress || CompressType.luban,
+          default: config.compress || CompressType.tinypng,
           required: true,
         },
         {
