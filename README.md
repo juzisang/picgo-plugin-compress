@@ -7,7 +7,7 @@
 
 用于 [PicGo](https://github.com/Molunerfinn/PicGo) 的图片压缩插件,支持 [TinyPng](https://tinypng.com/) [ImageMin](https://github.com/imagemin/imagemin)
 
-## 压缩失败参考
+## 安装失败参考
 - https://github.com/JuZiSang/picgo-plugin-compress/issues/2
 
 ## 安装
