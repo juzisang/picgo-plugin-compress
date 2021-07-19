@@ -7,6 +7,9 @@
 
 用于 [PicGo](https://github.com/Molunerfinn/PicGo) 的图片压缩插件,支持 [TinyPng](https://tinypng.com/) [ImageMin](https://github.com/imagemin/imagemin)
 
+## 安装失败参考
+- https://github.com/JuZiSang/picgo-plugin-compress/issues/2
+
 ## 安装
 
 ### [PicGo-Core](https://github.com/PicGo/PicGo-Core) 安装
@@ -22,6 +25,8 @@
 
   - [imagemin](https://github.com/imagemin/imagemin) +luban 算法，最大程度节省流量，默认选项
   - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，但是图片会有损耗
+  - imagemin_webp 本地有损压缩，支持GIF格式有损压缩
+    注意：有些图床（比如sm.ms）不支持webp图片格式，会上传失败
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
   - lubanforgitee  将所有图片压缩到1M以下,解决gitee的1M外链不能访问的问题. 
 
@@ -43,17 +48,8 @@ key 可选
 
 ## 压缩效果对比
 
-| 类型   | tinypng                                                                                        | luban                                                                                        | imagemin                                                                                        |
-| ------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| 原大小 | 1.5 MB                                                                                         | 1.5 MB                                                                                       | 1.5 MB                                                                                          |
-| 压缩后 | 315 KB                                                                                         | 276 KB                                                                                       | 411 KB                                                                                          |
-| 效果图 | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/tinypng.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/luban.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/imagemin.png) |
-
-
-
-
-
-# 一些压缩日志
-
-![image-20200928202644620](https://gitee.com/hss012489/picbed/raw/master/picgo/1601296004660-image-20200928202644620.jpg)
-
+| 类型   | tinypng                                                      | luban                                                        | imagemin                                                     | imagemin_webp                                                |
+| ------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 原大小 | 1.5 MB                                                       | 1.5 MB                                                       | 1.5 MB                                                       | 1.5 MB                                                       |
+| 压缩后 | 315 KB                                                       | 276 KB                                                       | 411 KB                                                       | 216 KB                                                       |
+| 效果图 | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/tinypng.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/luban.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/imagemin.png) | ![](https://raw.githubusercontent.com/JuZiSang/picgo-plugin-compress/master/tests/imagemin_webp.webp) |
