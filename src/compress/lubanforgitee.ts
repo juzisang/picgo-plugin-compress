@@ -73,9 +73,17 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     )
   }
 
-  function compressJpg(buffer: Buffer, quality: number): Promise<Buffer> {
+  /**
+   * 策略: 优先进行质量压缩,75->55->35
+   * @param buffer
+   * @param quality
+   * @param forceCompress
+   */
+  function compressJpg(buffer: Buffer, quality: number, forceCompress: boolean): Promise<Buffer> {
     if (Math.round(buffer.length / 1024) < thehold) {
-      return Promise.resolve(buffer)
+      if (!forceCompress) {
+        return Promise.resolve(buffer)
+      }
     }
     //return Promise.resolve(buffer)
     ctx.log.warn('文件大小:' + Math.round(buffer.length / 1024) + 'k')
@@ -86,21 +94,27 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     var filesize = Math.round(buffer.length / 1024)
     var longsize = image2.width() > image2.height() ? image2.width() : image2.height()
     var sampleSize = ['1x1']
-    if (filesize > 100 && sample > 1) {
-      if (longsize > 3000 && filesize < 700) {
-      } else {
-        sampleSize = [sample + 'x' + 1]
+    //一般情况下,不改变采样率
+    ctx.log.warn('before sampleSize:' + sampleSize[0] + ',质量' + quality)
+    if (quality <= 50) {
+      //质量小于等于50,采用稍激进的压缩方式
+      if (filesize > 100 && sample > 1) {
+        if (longsize > 3000 && filesize < 700) {
+        } else {
+          sampleSize = [sample + 'x' + 1]
+        }
+      }
+      if (quality < 40) {
+        //质量小于40,采用更加激进的压缩方式,直接压缩大小
+        ctx.log.warn(sample + '倍缩小图片尺寸为:' + image2.width() / sample + 'x' + image2.height() / sample)
+        //resize
+        buffer = images(buffer)
+          .resize(image2.width() / sample, image2.height() / sample)
+          .encode('.jpg')
+        quality = 50
       }
     }
     ctx.log.warn('sampleSize:' + sampleSize[0] + ',质量' + quality)
-    if (quality < 40) {
-      ctx.log.warn(sample + '倍缩小图片尺寸为:' + image2.width() / sample + 'x' + image2.height() / sample)
-      //resize
-      buffer = images(buffer)
-        .resize(image2.width() / sample, image2.height() / sample)
-        .encode('.jpg')
-      quality = 50
-    }
 
     return imagemin
       .buffer(buffer, {
@@ -110,7 +124,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
         if (Math.round(buffer2.length / 1024) < thehold) {
           return Promise.resolve(buffer2)
         }
-        return compressJpg(buffer2, quality - 20) //递归
+        return compressJpg(buffer2, quality - 10, true) //递归
       })
   }
 
@@ -118,12 +132,12 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     //todo 先判断有没有透明通道
     ctx.log.warn('luban  格式转换为jpg')
     var buffer1: Buffer = images(buffer).encode('jpg')
-    return compressJpg(buffer1, jpgQuality)
+    return compressJpg(buffer1, jpgQuality, true)
   }
 
   function compressWebP(buffer: Buffer): Promise<Buffer> {
     //todo 先判断有没有透明通道
-    ctx.log.warn('webp  格式转换为jpg')
+    ctx.log.warn('webp  不压缩,维持原格式')
     /*return imagemin
       .buffer(buffer, {
         plugins: [mozjpeg({ quality: 70, sample: ['1x1'] })] //, optipng({ optimizationLevel: 5 })//, sample:sampleSize
@@ -140,7 +154,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
     if (colors < 8) {
       var buffer1: Buffer = images(buffer).encode('jpg')
       ctx.log.warn('luban  gif格式转换为jpg')
-      return compressJpg(buffer1, jpgQuality)
+      return compressJpg(buffer1, jpgQuality, true)
     }
 
     return imagemin
@@ -161,7 +175,7 @@ export function lubanforgiteeCompress({ ctx, info }: CompressOptions): Promise<I
       ctx.log.warn('原始文件大小:' + Math.round(buffer.length / 1024) + 'k ,' + info.url)
       if (isJpg(buffer)) {
         ctx.log.warn('本身就是jpg,不用转换:' + info.url)
-        return compressJpg(buffer, jpgQuality)
+        return compressJpg(buffer, jpgQuality, true)
       } else if (isPng(buffer)) {
         ctx.log.warn('isPng,转换成jpg:' + info.url)
         return compressPng(buffer)
