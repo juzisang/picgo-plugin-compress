@@ -14,7 +14,7 @@ export function imageminWebPCompress({ ctx, info }: CompressOptions): Promise<Im
     })
     .then((buffer) => {
       ctx.log.info('imagemin_webp 压缩完成')
-      info.extname = 'webp'
+      info.extname = '.webp'
       info.fileName = changeExt(info.fileName, 'webp')
       return {
         ...info,
