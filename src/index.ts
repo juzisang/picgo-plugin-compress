@@ -1,72 +1,47 @@
 import PicGo from 'picgo'
-import { imageSize } from 'image-size'
-import * as path from 'path'
 import { PluginConfig } from 'picgo/dist/src/utils/interfaces'
-import { tinypngCompress } from './compress/tinypngweb'
-import { tinypngKeyCompress } from './compress/tinypng/index'
-import { imageminCompress } from './compress/imagemin'
-import { imageminWebPCompress } from './compress/imagemin_webp'
-import { NameType, CompressType } from './config'
-import { reName } from './utils/reName'
-import { lubanCompress } from './compress/luban'
-import { lubanforgiteeCompress } from './compress/lubanforgitee'
+import { TinypngCompress } from './compress/tinypngweb'
+import { TinypngKeyCompress } from './compress/tinypng/index'
+import { ImageminCompress } from './compress/imagemin'
+import { Image2WebPCompress } from './compress/image2webp'
+import { CompressType } from './config'
+import { getUrlInfo } from './utils'
+import { IConfig } from './interface'
+import { SkipCompress } from './compress/skip'
 
-interface IConfig {
-  compress: string
-  key: string
-  tinypngKey: string
-  nameType: string
-}
+const ALLOW_EXTNAME = ['.png', '.jpg', '.webp', '.jpeg']
 
-//npm install /Users/hss/github/picgo-plugin-compress
 function handle(ctx: PicGo) {
   const config: IConfig = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
   const compress = config?.compress
-  const nameType = config?.nameType
-  const key = config.key || config.tinypngKey
+  const key = config?.key || config?.tinypngKey
 
-  const tasks = ctx.input
-    .map((imageUrl) => {
-      return {
-        url: imageUrl,
-        fileName: reName(nameType, imageUrl),
-        extname: path.extname(imageUrl),
+  ctx.log.info('压缩:' + compress)
+
+  const tasks = ctx.input.map((imageUrl) => {
+    ctx.log.info('图片地址:' + imageUrl)
+    const info = getUrlInfo(imageUrl)
+    ctx.log.info('图片信息:' + JSON.stringify(info))
+    if (ALLOW_EXTNAME.includes(info.extname.toLowerCase())) {
+      switch (compress) {
+        case CompressType.tinypng:
+          return key ? TinypngKeyCompress(ctx, { imageUrl, key }) : TinypngCompress(ctx, { imageUrl })
+        case CompressType.imagemin:
+          return ImageminCompress(ctx, { imageUrl })
+        case CompressType.image2webp:
+          return Image2WebPCompress(ctx, { imageUrl })
+        default:
+          return key ? TinypngKeyCompress(ctx, { imageUrl, key }) : TinypngCompress(ctx, { imageUrl })
       }
-    })
-    .map((info) => {
-      const options = { ctx, info }
-      ctx.log.warn('compress type:' + compress)
-      return Promise.resolve()
-        .then(() => {
-          switch (compress) {
-            case CompressType.tinypng:
-              return key ? tinypngKeyCompress({ ...options, key }) : tinypngCompress(options)
-            case CompressType.imagemin:
-              return imageminCompress(options)
-            case CompressType.luban:
-              return lubanCompress(options)
-            case CompressType.lubangitee:
-              return lubanforgiteeCompress(options)
-            case CompressType.imagemin_webp:
-              return imageminWebPCompress(options)
-            default:
-              return lubanCompress(options)
-          }
-        })
-        .then((info) => {
-          const { width, height } = imageSize(info.buffer as Buffer)
-          const { buffer, extname, fileName } = info
-          return {
-            buffer,
-            extname,
-            fileName,
-            width,
-            height,
-          }
-        })
-    })
+    }
+    ctx.log.warn('不支持的格式，跳过压缩')
+    return SkipCompress(ctx, { imageUrl })
+  })
 
   return Promise.all(tasks).then((output) => {
+    ctx.log.info(
+      '图片信息:' + JSON.stringify(output.map((item) => ({ fileName: item.fileName, extname: item.extname, height: item.height, width: item.width })))
+    )
     ctx.output = output
     return ctx
   })
@@ -76,9 +51,7 @@ module.exports = function (ctx: PicGo): any {
   return {
     transformer: 'compress',
     register() {
-      ctx.helper.transformer.register('compress', {
-        handle,
-      })
+      ctx.helper.transformer.register('compress', { handle })
     },
     config(ctx: PicGo): PluginConfig[] {
       let config = ctx.getConfig('transformer.compress') || ctx.getConfig('picgo-plugin-compress')
@@ -99,14 +72,6 @@ module.exports = function (ctx: PicGo): any {
           type: 'input',
           message: '申请key，不填默认使用WebApi，逗号隔开，可使用多个Key叠加使用次数',
           default: config.key || config.tinypngKey || null,
-          required: false,
-        },
-        {
-          name: 'nameType',
-          type: 'list',
-          message: '是否重命名成时间戳',
-          choices: Object.keys(NameType),
-          default: config.nameType || NameType.none,
           required: false,
         },
       ]

@@ -1,14 +1,17 @@
-import { CompressOptions, ImgInfo } from '../../utils/interfaces'
+import PicGo from 'picgo'
+import { getImageInfo } from '../../utils'
+import { CommonParams, ImageInfo } from '../../interface'
 import Tinypng from './tinypng'
 
-export function tinypngKeyCompress({ ctx, info, key }: CompressOptions): Promise<ImgInfo> {
+export interface ITinypngOptions {
+  key: string
+}
+
+export function TinypngKeyCompress(ctx: PicGo, { imageUrl, key }: CommonParams & ITinypngOptions): Promise<ImageInfo> {
   return Tinypng.init({ ctx, keys: key!.split(',') })
-    .then(() => Tinypng.upload(info.url))
+    .then(() => Tinypng.upload(imageUrl))
     .then((buffer) => {
-      ctx.log.info('TinypngWeb 上传成功')
-      return {
-        ...info,
-        buffer,
-      }
+      ctx.log.info('Tinypng 上传成功')
+      return getImageInfo(imageUrl, buffer)
     })
 }

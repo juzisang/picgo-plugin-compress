@@ -1,6 +1,6 @@
 import * as path from 'path'
 import * as fs from 'fs-extra'
-import { getImageBuffer, isUrl } from '../../utils/getImage'
+import { getImageBuffer, isNetworkUrl } from '../../utils'
 import { TINYPNG_UPLOAD_URL } from '../../config'
 import Base64 from 'crypto-js/enc-base64'
 import Utf8 from 'crypto-js/enc-utf8'
@@ -33,7 +33,7 @@ class TinyPng {
 
   async upload(url: string) {
     this.PicGo.log.info('TinyPng开始上传')
-    if (isUrl(url)) {
+    if (isNetworkUrl(url)) {
       return this.uploadImage({ url, originalUrl: url, key: await this.getKey() })
     } else {
       return this.uploadImage({
