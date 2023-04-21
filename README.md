@@ -27,7 +27,7 @@
   - [tinypng](https://tinypng.com/) 无损压缩，需要上传到 tinypng
   - [imagemin](https://github.com/imagemin/imagemin) 压缩过程不需要经过网络，但是图片会有损耗
   - image2webp 本地有损压缩，支持 GIF 格式有损压缩
-    注意：有些图床（比如 sm.ms）不支持 webp 图片格式，会上传失败
+    注意：有些图床不支持 webp 图片格式，会上传失败
 
 key 可选
 
